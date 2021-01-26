@@ -8,12 +8,13 @@ package view;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -23,10 +24,6 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "estado", catalog = "clinica_crc", schema = "")
-@NamedQueries({
-    @NamedQuery(name = "Estado.findAll", query = "SELECT e FROM Estado e")
-    , @NamedQuery(name = "Estado.findByIdestado", query = "SELECT e FROM Estado e WHERE e.idestado = :idestado")
-    , @NamedQuery(name = "Estado.findByNome", query = "SELECT e FROM Estado e WHERE e.nome = :nome")})
 public class Estado implements Serializable {
 
     @Transient
@@ -40,6 +37,13 @@ public class Estado implements Serializable {
     @Column(name = "nome")
     private String nome;
 
+    
+    @OneToMany(mappedBy = "estado")
+    private List<Cidade> cidades = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "estado")
+    private List<Paciente> pacientes = new ArrayList<>();
+    
     public Estado() {
     }
 
@@ -89,7 +93,7 @@ public class Estado implements Serializable {
 
     @Override
     public String toString() {
-        return "view.Estado[ idestado=" + idestado + " ]";
+        return nome;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -98,6 +102,22 @@ public class Estado implements Serializable {
 
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
+    }
+
+    public List<Cidade> getCidades() {
+        return cidades;
+    }
+
+    public void setCidades(List<Cidade> cidades) {
+        this.cidades = cidades;
+    }
+
+    public List<Paciente> getPacientes() {
+        return pacientes;
+    }
+
+    public void setPacientes(List<Paciente> pacientes) {
+        this.pacientes = pacientes;
     }
     
 }

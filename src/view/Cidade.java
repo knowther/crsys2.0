@@ -8,14 +8,16 @@ package view;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -25,11 +27,6 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "cidade", catalog = "clinica_crc", schema = "")
-@NamedQueries({
-    @NamedQuery(name = "Cidade.findAll", query = "SELECT c FROM Cidade c")
-    , @NamedQuery(name = "Cidade.findByIdcidade", query = "SELECT c FROM Cidade c WHERE c.idcidade = :idcidade")
-    , @NamedQuery(name = "Cidade.findByNome", query = "SELECT c FROM Cidade c WHERE c.nome = :nome")
-    , @NamedQuery(name = "Cidade.findByEstadoIdestado", query = "SELECT c FROM Cidade c WHERE c.estadoIdestado = :estadoIdestado")})
 public class Cidade implements Serializable {
 
     @Transient
@@ -43,8 +40,12 @@ public class Cidade implements Serializable {
     private Integer idcidade;
     @Column(name = "nome")
     private String nome;
-    @Column(name = "estado_idestado")
-    private Integer estadoIdestado;
+    
+    @ManyToOne
+    private Estado estado;
+    
+    @OneToMany(mappedBy = "cidade")
+    private List<Paciente> pacientes = new ArrayList<>();
 
     public Cidade() {
     }
@@ -73,15 +74,19 @@ public class Cidade implements Serializable {
         changeSupport.firePropertyChange("nome", oldNome, nome);
     }
 
-    public Integer getEstadoIdestado() {
-        return estadoIdestado;
+    public Estado getEstado() {
+        return estado;
     }
 
-    public void setEstadoIdestado(Integer estadoIdestado) {
-        Integer oldEstadoIdestado = this.estadoIdestado;
-        this.estadoIdestado = estadoIdestado;
-        changeSupport.firePropertyChange("estadoIdestado", oldEstadoIdestado, estadoIdestado);
+    public void setEstado(Estado estado) {
+            Estado oldEstado = this.estado;
+        this.estado = estado;
+        changeSupport.firePropertyChange("estado", oldEstado, estado);
     }
+
+    
+    
+    
 
     @Override
     public int hashCode() {
@@ -105,7 +110,7 @@ public class Cidade implements Serializable {
 
     @Override
     public String toString() {
-        return "view.Cidade[ idcidade=" + idcidade + " ]";
+        return nome;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -114,6 +119,14 @@ public class Cidade implements Serializable {
 
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
+    }
+
+    public List<Paciente> getPacientes() {
+        return pacientes;
+    }
+
+    public void setPacientes(List<Paciente> pacientes) {
+        this.pacientes = pacientes;
     }
     
 }

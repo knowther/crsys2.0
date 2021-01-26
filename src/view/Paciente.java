@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -28,20 +29,6 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "paciente", catalog = "clinica_crc", schema = "")
-@NamedQueries({
-    @NamedQuery(name = "Paciente.findAll", query = "SELECT p FROM Paciente p")
-    , @NamedQuery(name = "Paciente.findByIdpaciente", query = "SELECT p FROM Paciente p WHERE p.idpaciente = :idpaciente")
-    , @NamedQuery(name = "Paciente.findByNome", query = "SELECT p FROM Paciente p WHERE p.nome = :nome")
-    , @NamedQuery(name = "Paciente.findByDataNascimento", query = "SELECT p FROM Paciente p WHERE p.dataNascimento = :dataNascimento")
-    , @NamedQuery(name = "Paciente.findByCpf", query = "SELECT p FROM Paciente p WHERE p.cpf = :cpf")
-    , @NamedQuery(name = "Paciente.findByRua", query = "SELECT p FROM Paciente p WHERE p.rua = :rua")
-    , @NamedQuery(name = "Paciente.findByN\u00famero", query = "SELECT p FROM Paciente p WHERE p.n\u00famero = :n\u00famero")
-    , @NamedQuery(name = "Paciente.findByBairro", query = "SELECT p FROM Paciente p WHERE p.bairro = :bairro")
-    , @NamedQuery(name = "Paciente.findByCidadeIdcidade", query = "SELECT p FROM Paciente p WHERE p.cidadeIdcidade = :cidadeIdcidade")
-    , @NamedQuery(name = "Paciente.findByEstadoIdestado", query = "SELECT p FROM Paciente p WHERE p.estadoIdestado = :estadoIdestado")
-    , @NamedQuery(name = "Paciente.findByCep", query = "SELECT p FROM Paciente p WHERE p.cep = :cep")
-    , @NamedQuery(name = "Paciente.findByProfissaoIdprofissao", query = "SELECT p FROM Paciente p WHERE p.profissaoIdprofissao = :profissaoIdprofissao")
-    , @NamedQuery(name = "Paciente.findByFoto", query = "SELECT p FROM Paciente p WHERE p.foto = :foto")})
 public class Paciente implements Serializable {
 
     @Transient
@@ -53,41 +40,40 @@ public class Paciente implements Serializable {
     @Basic(optional = false)
     @Column(name = "idpaciente")
     private Integer idpaciente;
-    @Column(name = "nome")
-    private String nome;
-    @Basic(optional = false)
+    @Column(name = "bairro")
+    private String bairro;
+    @Column(name = "cep")
+    private String cep;
+    @Column(name = "cpf")
+    private String cpf;
     @Column(name = "dataNascimento")
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
-    @Column(name = "cpf")
-    private String cpf;
-    @Column(name = "rua")
-    private String rua;
-    @Column(name = "n\u00famero")
-    private String número;
-    @Column(name = "bairro")
-    private String bairro;
-    @Column(name = "cidade_idcidade")
-    private Integer cidadeIdcidade;
-    @Column(name = "estado_idestado")
-    private Integer estadoIdestado;
-    @Column(name = "cep")
-    private String cep;
-    @Column(name = "profissao_idprofissao")
-    private Integer profissaoIdprofissao;
     @Column(name = "foto")
     private String foto;
-
+    @Column(name = "nome")
+    private String nome;
+    @Column(name = "n\u00famero")
+    private String número;
+    @Column(name = "rua")
+    private String rua;
+  
+    @ManyToOne
+    private Cidade cidade;
+    
+    @ManyToOne
+    private Estado estado;
+    
+    @ManyToOne
+    private Profissao profissao;
+    
+    
+    
     public Paciente() {
     }
 
     public Paciente(Integer idpaciente) {
         this.idpaciente = idpaciente;
-    }
-
-    public Paciente(Integer idpaciente, Date dataNascimento) {
-        this.idpaciente = idpaciente;
-        this.dataNascimento = dataNascimento;
     }
 
     public Integer getIdpaciente() {
@@ -100,56 +86,6 @@ public class Paciente implements Serializable {
         changeSupport.firePropertyChange("idpaciente", oldIdpaciente, idpaciente);
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        String oldNome = this.nome;
-        this.nome = nome;
-        changeSupport.firePropertyChange("nome", oldNome, nome);
-    }
-
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(Date dataNascimento) {
-        Date oldDataNascimento = this.dataNascimento;
-        this.dataNascimento = dataNascimento;
-        changeSupport.firePropertyChange("dataNascimento", oldDataNascimento, dataNascimento);
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        String oldCpf = this.cpf;
-        this.cpf = cpf;
-        changeSupport.firePropertyChange("cpf", oldCpf, cpf);
-    }
-
-    public String getRua() {
-        return rua;
-    }
-
-    public void setRua(String rua) {
-        String oldRua = this.rua;
-        this.rua = rua;
-        changeSupport.firePropertyChange("rua", oldRua, rua);
-    }
-
-    public String getNúmero() {
-        return número;
-    }
-
-    public void setNúmero(String número) {
-        String oldNúmero = this.número;
-        this.número = número;
-        changeSupport.firePropertyChange("n\u00famero", oldNúmero, número);
-    }
-
     public String getBairro() {
         return bairro;
     }
@@ -158,26 +94,6 @@ public class Paciente implements Serializable {
         String oldBairro = this.bairro;
         this.bairro = bairro;
         changeSupport.firePropertyChange("bairro", oldBairro, bairro);
-    }
-
-    public Integer getCidadeIdcidade() {
-        return cidadeIdcidade;
-    }
-
-    public void setCidadeIdcidade(Integer cidadeIdcidade) {
-        Integer oldCidadeIdcidade = this.cidadeIdcidade;
-        this.cidadeIdcidade = cidadeIdcidade;
-        changeSupport.firePropertyChange("cidadeIdcidade", oldCidadeIdcidade, cidadeIdcidade);
-    }
-
-    public Integer getEstadoIdestado() {
-        return estadoIdestado;
-    }
-
-    public void setEstadoIdestado(Integer estadoIdestado) {
-        Integer oldEstadoIdestado = this.estadoIdestado;
-        this.estadoIdestado = estadoIdestado;
-        changeSupport.firePropertyChange("estadoIdestado", oldEstadoIdestado, estadoIdestado);
     }
 
     public String getCep() {
@@ -190,14 +106,24 @@ public class Paciente implements Serializable {
         changeSupport.firePropertyChange("cep", oldCep, cep);
     }
 
-    public Integer getProfissaoIdprofissao() {
-        return profissaoIdprofissao;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setProfissaoIdprofissao(Integer profissaoIdprofissao) {
-        Integer oldProfissaoIdprofissao = this.profissaoIdprofissao;
-        this.profissaoIdprofissao = profissaoIdprofissao;
-        changeSupport.firePropertyChange("profissaoIdprofissao", oldProfissaoIdprofissao, profissaoIdprofissao);
+    public void setCpf(String cpf) {
+        String oldCpf = this.cpf;
+        this.cpf = cpf;
+        changeSupport.firePropertyChange("cpf", oldCpf, cpf);
+    }
+
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Date dataNascimento) {
+        Date oldDataNascimento = this.dataNascimento;
+        this.dataNascimento = dataNascimento;
+        changeSupport.firePropertyChange("dataNascimento", oldDataNascimento, dataNascimento);
     }
 
     public String getFoto() {
@@ -209,6 +135,67 @@ public class Paciente implements Serializable {
         this.foto = foto;
         changeSupport.firePropertyChange("foto", oldFoto, foto);
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        String oldNome = this.nome;
+        this.nome = nome;
+        changeSupport.firePropertyChange("nome", oldNome, nome);
+    }
+
+    public String getNúmero() {
+        return número;
+    }
+
+    public void setNúmero(String número) {
+        String oldNúmero = this.número;
+        this.número = número;
+        changeSupport.firePropertyChange("n\u00famero", oldNúmero, número);
+    }
+
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        String oldRua = this.rua;
+        this.rua = rua;
+        changeSupport.firePropertyChange("rua", oldRua, rua);
+    }
+
+   public Cidade getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(Cidade cidade) {
+        Cidade oldCidade = this.cidade;
+        this.cidade = cidade;
+        changeSupport.firePropertyChange("cidade", oldCidade, cidade);
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        Estado oldEstado = this.estado;
+        this.estado = estado;
+        changeSupport.firePropertyChange("estado", oldEstado, estado);
+    }
+
+    public Profissao getProfissao() {
+        return profissao;
+    }
+
+    public void setProfissao(Profissao profissao) {
+        Profissao oldProfissao = this.profissao;
+        this.profissao = profissao;
+        changeSupport.firePropertyChange("profissao", oldProfissao, profissao);
+    }
+
 
     @Override
     public int hashCode() {
