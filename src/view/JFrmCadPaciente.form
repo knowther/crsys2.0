@@ -90,6 +90,42 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;view.Profissao&gt;"/>
       </AuxValues>
     </Component>
+    <Component class="javax.persistence.Query" name="turnoQuery">
+      <Properties>
+        <Property name="query" type="java.lang.String" value="SELECT t FROM Turno t"/>
+        <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
+          <ComponentRef name="entityManager"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="java.util.List" name="turnoList">
+      <Properties>
+        <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
+          <ComponentRef name="turnoQuery"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;view.Turno&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.persistence.Query" name="medicoQuery">
+      <Properties>
+        <Property name="query" type="java.lang.String" value="SELECT m FROM Medico m"/>
+        <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
+          <ComponentRef name="entityManager"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="java.util.List" name="medicoList">
+      <Properties>
+        <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
+          <ComponentRef name="medicoQuery"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;view.Medico&gt;"/>
+      </AuxValues>
+    </Component>
   </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -111,7 +147,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="masterScrollPane" min="-2" pref="765" max="-2" attributes="0"/>
-                      <EmptySpace pref="42" max="32767" attributes="0"/>
+                      <EmptySpace pref="99" max="32767" attributes="0"/>
                   </Group>
                   <Component id="jPanel3" max="32767" attributes="0"/>
               </Group>
@@ -272,13 +308,16 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jPanel1" max="32767" attributes="0"/>
-                      <Component id="jPanel2" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jPanel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jPanel1" max="32767" attributes="0"/>
+                          <Component id="jPanel2" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -293,7 +332,9 @@
                       <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel2" max="32767" attributes="0"/>
+                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jPanel5" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -320,19 +361,20 @@
                           <Component id="nomeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="idpacienteField" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
                           <Component id="profissaoIdprofissaoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="dataNascimentoLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
-                              <Component id="cpfLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jComboBox3" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jFormattedTextField1" min="-2" pref="143" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="cpfField" pref="159" max="32767" attributes="0"/>
+                          <Component id="jComboBox3" alignment="0" pref="320" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="dataNascimentoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jFormattedTextField1" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="cpfLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cpfField" alignment="0" pref="159" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="38" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="fotoLabel" min="-2" max="-2" attributes="0"/>
@@ -389,30 +431,42 @@
             <Component class="javax.swing.JTextField" name="idpacienteField">
               <BindingProperties>
                 <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.idpaciente}" target="idpacienteField" targetPath="text" updateStrategy="0" immediately="false">
-                  <Property name="incompletePathValue" type="java.lang.String" value="null"/>
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                  <Property name="incompletePathValue" type="java.lang.String" value=""/>
                 </BindingProperty>
                 <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="idpacienteField" targetPath="enabled" updateStrategy="0" immediately="false"/>
               </BindingProperties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="idpacienteFieldActionPerformed"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="JFrmCadPaciente_idpacienteField"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="cpfLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cpf:"/>
+                <Property name="text" type="java.lang.String" value="CPF:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="idpacienteLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Idpaciente:"/>
+                <Property name="text" type="java.lang.String" value="Id:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="nomeField">
               <BindingProperties>
                 <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.nome}" target="nomeField" targetPath="text" updateStrategy="0" immediately="false">
-                  <Property name="incompletePathValue" type="java.lang.String" value="null"/>
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                  <Property name="incompletePathValue" type="java.lang.String" value=""/>
                 </BindingProperty>
                 <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="nomeField" targetPath="enabled" updateStrategy="1" immediately="false"/>
               </BindingProperties>
             </Component>
             <Component class="javax.swing.JTextField" name="cpfField">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=""/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+              </Properties>
               <BindingProperties>
                 <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.cpf}" target="cpfField" targetPath="text" updateStrategy="0" immediately="false">
                   <Property name="incompletePathValue" type="java.lang.String" value="null"/>
@@ -443,7 +497,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="profissaoIdprofissaoLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Profissao Idprofissao:"/>
+                <Property name="text" type="java.lang.String" value="Profiss&#xe3;o:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="jComboBox3">
@@ -475,7 +529,7 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Logradoudo"/>
+                <TitledBorder title="Logradouro"/>
               </Border>
             </Property>
           </Properties>
@@ -485,41 +539,44 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="bairroLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="143" max="-2" attributes="0"/>
-                                      <Component id="cidadeIdcidadeLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
-                                      <Component id="estadoIdestadoLabel" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="cepLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cepField" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="bairroField" min="-2" pref="160" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jComboBox1" min="-2" pref="132" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jComboBox2" min="-2" pref="121" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="bairroLabel" min="-2" max="-2" attributes="0"/>
+                                          <Component id="bairroField" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                                              <Component id="estadoIdestadoLabel" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="jComboBox2" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="cidadeIdcidadeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                                              <Component id="jComboBox1" min="-2" pref="132" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
                                   <Component id="ruaLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="ruaField" alignment="0" min="-2" pref="516" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="24" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="númeroField" min="-2" pref="51" max="-2" attributes="0"/>
+                                  <Component id="numeroField" min="-2" pref="51" max="-2" attributes="0"/>
                                   <Component id="númeroLabel" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <Component id="cepLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="cepField" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -529,30 +586,37 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="ruaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="númeroLabel" alignment="1" min="-2" pref="14" max="-2" attributes="0"/>
+                          <Component id="númeroLabel" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="ruaField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="númeroField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="bairroLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cidadeIdcidadeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="estadoIdestadoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="bairroField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="ruaField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="numeroField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="bairroLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="estadoIdestadoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="bairroField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="cidadeIdcidadeLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="cepLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cepField" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace pref="50" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -561,7 +625,8 @@
             <Component class="javax.swing.JTextField" name="bairroField">
               <BindingProperties>
                 <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.bairro}" target="bairroField" targetPath="text" updateStrategy="0" immediately="false">
-                  <Property name="incompletePathValue" type="java.lang.String" value="null"/>
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                  <Property name="incompletePathValue" type="java.lang.String" value=""/>
                 </BindingProperty>
                 <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="bairroField" targetPath="enabled" updateStrategy="1" immediately="false"/>
               </BindingProperties>
@@ -578,7 +643,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="cidadeIdcidadeLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cidade Idcidade:"/>
+                <Property name="text" type="java.lang.String" value="Cidade:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="jComboBox1">
@@ -594,7 +659,8 @@
             <Component class="javax.swing.JTextField" name="ruaField">
               <BindingProperties>
                 <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.rua}" target="ruaField" targetPath="text" updateStrategy="0" immediately="false">
-                  <Property name="incompletePathValue" type="java.lang.String" value="null"/>
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                  <Property name="incompletePathValue" type="java.lang.String" value=""/>
                 </BindingProperty>
                 <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="ruaField" targetPath="enabled" updateStrategy="1" immediately="false"/>
               </BindingProperties>
@@ -605,7 +671,8 @@
             <Component class="javax.swing.JTextField" name="cepField">
               <BindingProperties>
                 <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.cep}" target="cepField" targetPath="text" updateStrategy="0" immediately="false">
-                  <Property name="incompletePathValue" type="java.lang.String" value="null"/>
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                  <Property name="incompletePathValue" type="java.lang.String" value=""/>
                 </BindingProperty>
                 <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="cepField" targetPath="enabled" updateStrategy="1" immediately="false"/>
               </BindingProperties>
@@ -620,17 +687,18 @@
                 <Property name="text" type="java.lang.String" value="N&#xfa;mero:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="n&#xfa;meroField">
+            <Component class="javax.swing.JTextField" name="numeroField">
               <BindingProperties>
-                <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.n&#xfa;mero}" target="n&#xfa;meroField" targetPath="text" updateStrategy="0" immediately="false">
-                  <Property name="incompletePathValue" type="java.lang.String" value="null"/>
+                <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.numero}" target="numeroField" targetPath="text" updateStrategy="0" immediately="false">
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                  <Property name="incompletePathValue" type="java.lang.String" value=""/>
                 </BindingProperty>
-                <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="n&#xfa;meroField" targetPath="enabled" updateStrategy="1" immediately="false"/>
+                <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="numeroField" targetPath="enabled" updateStrategy="1" immediately="false"/>
               </BindingProperties>
             </Component>
             <Component class="javax.swing.JLabel" name="estadoIdestadoLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Estado Idestado:"/>
+                <Property name="text" type="java.lang.String" value="Estado:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="jComboBox2">
@@ -729,6 +797,84 @@
                 <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
               </AuxValues>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel5">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="Dados Cl&#xed;nicos"/>
+              </Border>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jComboBox4" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBox5" min="-2" pref="304" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="119" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jComboBox4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBox5" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="19" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JComboBox" name="jComboBox4">
+              <BindingProperties>
+                <BindingProperty name="elements" source="turnoList" target="jComboBox4" targetPath="elements" updateStrategy="0" immediately="false"/>
+                <BindingProperty name="selectedItem" source="masterTable" sourcePath="${selectedElement.turno}" target="jComboBox4" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+                <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="jComboBox4" targetPath="enabled" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="jComboBox5">
+              <BindingProperties>
+                <BindingProperty name="elements" source="medicoList" target="jComboBox5" targetPath="elements" updateStrategy="0" immediately="false"/>
+                <BindingProperty name="selectedItem" source="masterTable" sourcePath="${selectedElement.medico}" target="jComboBox5" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+                <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="jComboBox5" targetPath="enabled" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Turno:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel3">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="M&#xe9;dico:"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

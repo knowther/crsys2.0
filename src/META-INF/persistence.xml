@@ -6,6 +6,8 @@
     <class>view.Estado</class>
     <class>view.Cidade</class>
     <class>view.Paciente</class>
+    <class>view.Turno</class>
+    <class>view.Medico</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/clinica_crc?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

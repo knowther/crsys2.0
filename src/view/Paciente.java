@@ -53,8 +53,8 @@ public class Paciente implements Serializable {
     private String foto;
     @Column(name = "nome")
     private String nome;
-    @Column(name = "n\u00famero")
-    private String número;
+    @Column(name = "numero")
+    private String numero;
     @Column(name = "rua")
     private String rua;
   
@@ -67,11 +67,35 @@ public class Paciente implements Serializable {
     @ManyToOne
     private Profissao profissao;
     
-    
+    @ManyToOne
+    private Turno turno;
+
+    @ManyToOne
+    private Medico medico;
+   
     
     public Paciente() {
     }
 
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+       Medico oldMedico = this.medico;
+        this.medico = medico;
+      changeSupport.firePropertyChange("medico", oldMedico, medico);
+    }
+    
+ public Turno getTurno() {
+        return turno;
+    }
+
+    public void setTurno(Turno turno) {
+         Turno oldTurno = this.turno;
+        this.turno = turno;
+        changeSupport.firePropertyChange("turno", oldTurno, turno);
+    }
     public Paciente(Integer idpaciente) {
         this.idpaciente = idpaciente;
     }
@@ -146,14 +170,14 @@ public class Paciente implements Serializable {
         changeSupport.firePropertyChange("nome", oldNome, nome);
     }
 
-    public String getNúmero() {
-        return número;
+    public String getNumero() {
+        return numero;
     }
 
-    public void setNúmero(String número) {
-        String oldNúmero = this.número;
-        this.número = número;
-        changeSupport.firePropertyChange("n\u00famero", oldNúmero, número);
+    public void setNumero(String número) {
+        String oldNúmero = this.numero;
+        this.numero = número;
+        changeSupport.firePropertyChange("numero", oldNúmero, número);
     }
 
     public String getRua() {
