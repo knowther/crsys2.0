@@ -6,12 +6,24 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.event.ItemEvent;
+import java.awt.image.BufferedImage;
 import java.beans.Beans;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.persistence.RollbackException;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileFilter;
 
 /**
  *
@@ -40,7 +52,7 @@ public class JFrmCadPaciente extends JPanel {
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT p FROM Paciente p");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         cidadeQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM Cidade c");
-        cidadeList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : cidadeQuery.getResultList();
+        cidadeList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(cidadeQuery.getResultList());
         estadoQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT e FROM Estado e");
         estadoList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : estadoQuery.getResultList();
         profissaoQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT p FROM Profissao p");
@@ -62,30 +74,31 @@ public class JFrmCadPaciente extends JPanel {
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         nomeLabel = new javax.swing.JLabel();
         profissaoIdprofissaoLabel = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBoxProfissao = new javax.swing.JComboBox<>();
         fotoLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jButtonPesquisaProfissao = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         bairroField = new javax.swing.JTextField();
         bairroLabel = new javax.swing.JLabel();
         cepLabel = new javax.swing.JLabel();
         cidadeIdcidadeLabel = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxCidade = new javax.swing.JComboBox<>();
         ruaField = new javax.swing.JTextField();
         cepField = new javax.swing.JTextField();
         ruaLabel = new javax.swing.JLabel();
         númeroLabel = new javax.swing.JLabel();
         numeroField = new javax.swing.JTextField();
         estadoIdestadoLabel = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBoxEstado = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         newButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jComboBox5 = new javax.swing.JComboBox<>();
+        jComboBoxTurno = new javax.swing.JComboBox<>();
+        jComboBoxMedico = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -152,11 +165,9 @@ public class JFrmCadPaciente extends JPanel {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), nomeField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
-        cpfField.setText("");
         cpfField.setToolTipText("");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.cpf}"), cpfField, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        binding.setSourceUnreadableValue("null");
         bindingGroup.addBinding(binding);
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), cpfField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -174,17 +185,30 @@ public class JFrmCadPaciente extends JPanel {
 
         profissaoIdprofissaoLabel.setText("Profissão:");
 
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, profissaoList, jComboBox3);
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, profissaoList, jComboBoxProfissao);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.profissao}"), jComboBox3, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.profissao}"), jComboBoxProfissao, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding.setSourceUnreadableValue(null);
         bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBox3, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBoxProfissao, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         fotoLabel.setText("Foto:");
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\johnn\\Documents\\NetBeansProjects\\clinicacrc2\\fotos\\user.png")); // NOI18N
         jLabel2.setText("jLabel2");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jLabel2, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        jLabel2.addMouseListener(formListener);
+
+        jButtonPesquisaProfissao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/magnifier.png"))); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jButtonPesquisaProfissao, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        jButtonPesquisaProfissao.addActionListener(formListener);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -198,7 +222,7 @@ public class JFrmCadPaciente extends JPanel {
                     .addComponent(nomeLabel)
                     .addComponent(idpacienteField, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(profissaoIdprofissaoLabel)
-                    .addComponent(jComboBox3, 0, 320, Short.MAX_VALUE)
+                    .addComponent(jComboBoxProfissao, 0, 320, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(dataNascimentoLabel)
@@ -207,12 +231,14 @@ public class JFrmCadPaciente extends JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cpfLabel)
                             .addComponent(cpfField, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(fotoLabel)
                         .addGap(203, 203, 203))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonPesquisaProfissao, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
@@ -242,7 +268,9 @@ public class JFrmCadPaciente extends JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(profissaoIdprofissaoLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBoxProfissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonPesquisaProfissao))
                         .addGap(0, 62, Short.MAX_VALUE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
@@ -262,17 +290,17 @@ public class JFrmCadPaciente extends JPanel {
 
         cidadeIdcidadeLabel.setText("Cidade:");
 
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cidadeList, jComboBox1);
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cidadeList, jComboBoxCidade);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.cidade}"), jComboBox1, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.cidade}"), jComboBoxCidade, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBox1, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBoxCidade, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.rua}"), ruaField, org.jdesktop.beansbinding.BeanProperty.create("text"));
         binding.setSourceUnreadableValue("");
         bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), ruaField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), ruaField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         ruaField.addActionListener(formListener);
@@ -295,12 +323,14 @@ public class JFrmCadPaciente extends JPanel {
 
         estadoIdestadoLabel.setText("Estado:");
 
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, estadoList, jComboBox2);
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, estadoList, jComboBoxEstado);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.estado}"), jComboBox2, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.estado}"), jComboBoxEstado, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBox2, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBoxEstado, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
+
+        jComboBoxEstado.addItemListener(formListener);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -320,13 +350,13 @@ public class JFrmCadPaciente extends JPanel {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                         .addGap(1, 1, 1)
                                         .addComponent(estadoIdestadoLabel))
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jComboBoxEstado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(cidadeIdcidadeLabel, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                         .addGap(3, 3, 3)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(jComboBoxCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(ruaLabel)
                             .addComponent(ruaField, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -335,7 +365,7 @@ public class JFrmCadPaciente extends JPanel {
                             .addComponent(númeroLabel)))
                     .addComponent(cepLabel)
                     .addComponent(cepField, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,11 +387,11 @@ public class JFrmCadPaciente extends JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(bairroField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jComboBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(cidadeIdcidadeLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jComboBoxCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cepLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -417,18 +447,18 @@ public class JFrmCadPaciente extends JPanel {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Clínicos"));
 
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, turnoList, jComboBox4);
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, turnoList, jComboBoxTurno);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.turno}"), jComboBox4, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.turno}"), jComboBoxTurno, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBox4, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBoxTurno, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, medicoList, jComboBox5);
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, medicoList, jComboBoxMedico);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.medico}"), jComboBox5, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.medico}"), jComboBoxMedico, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBox5, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBoxMedico, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         jLabel1.setText("Turno:");
@@ -442,12 +472,12 @@ public class JFrmCadPaciente extends JPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(59, 59, 59)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(119, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -459,9 +489,9 @@ public class JFrmCadPaciente extends JPanel {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(jComboBoxTurno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -520,10 +550,13 @@ public class JFrmCadPaciente extends JPanel {
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener {
+    private class FormListener implements java.awt.event.ActionListener, java.awt.event.ItemListener, java.awt.event.MouseListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == ruaField) {
+            if (evt.getSource() == idpacienteField) {
+                JFrmCadPaciente.this.idpacienteFieldActionPerformed(evt);
+            }
+            else if (evt.getSource() == ruaField) {
                 JFrmCadPaciente.this.ruaFieldActionPerformed(evt);
             }
             else if (evt.getSource() == newButton) {
@@ -538,13 +571,36 @@ public class JFrmCadPaciente extends JPanel {
             else if (evt.getSource() == saveButton) {
                 JFrmCadPaciente.this.saveButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == idpacienteField) {
-                JFrmCadPaciente.this.idpacienteFieldActionPerformed(evt);
+            else if (evt.getSource() == jButtonPesquisaProfissao) {
+                JFrmCadPaciente.this.jButtonPesquisaProfissaoActionPerformed(evt);
             }
+        }
+
+        public void itemStateChanged(java.awt.event.ItemEvent evt) {
+            if (evt.getSource() == jComboBoxEstado) {
+                JFrmCadPaciente.this.jComboBoxEstadoItemStateChanged(evt);
+            }
+        }
+
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            if (evt.getSource() == jLabel2) {
+                JFrmCadPaciente.this.jLabel2MouseClicked(evt);
+            }
+        }
+
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+        }
+
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+        }
+
+        public void mousePressed(java.awt.event.MouseEvent evt) {
+        }
+
+        public void mouseReleased(java.awt.event.MouseEvent evt) {
         }
     }// </editor-fold>//GEN-END:initComponents
 
-    
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
@@ -601,6 +657,80 @@ public class JFrmCadPaciente extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_idpacienteFieldActionPerformed
 
+    private void jButtonPesquisaProfissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisaProfissaoActionPerformed
+        JFrmConsultaProfissao frm = new JFrmConsultaProfissao(new JFrame(), true);
+        frm.setLocationRelativeTo(null);
+        frm.setVisible(true);
+        
+        if (frm.isConfirmar()) {
+            
+            Profissao p = frm.getProfissao();
+            jComboBoxProfissao.setSelectedItem(p);
+        }
+    }//GEN-LAST:event_jButtonPesquisaProfissaoActionPerformed
+
+    private void jComboBoxEstadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxEstadoItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            
+            Estado e = (Estado) jComboBoxEstado.getSelectedItem();
+            cidadeQuery = entityManager.createQuery("select c from Cidade c where c.estado = :e order by nome");
+            cidadeQuery.setParameter("e", e);
+            cidadeList.clear();
+            cidadeList.addAll(cidadeQuery.getResultList());
+           
+        }
+    }//GEN-LAST:event_jComboBoxEstadoItemStateChanged
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        
+        
+        if(evt.getClickCount() ==2 && jLabel2.isEnabled()){
+            JFileChooser fc = new JFileChooser();
+            fc.setFileFilter(new FileFilter() {
+                @Override
+                public boolean accept(File file) {
+                    String nome = file.getAbsolutePath();
+                    return nome.endsWith("jpg") | nome.endsWith("png")| nome.endsWith("bmp") |  file.isDirectory();
+                }
+
+                @Override
+                public String getDescription() {
+                    return "Imagem";
+                }
+            });
+            
+            if(fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+                
+                String path = fc.getSelectedFile().getAbsolutePath();
+                ImageIcon icone1 = new ImageIcon(path);
+                Image img = icone1.getImage().getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_DEFAULT);
+                jLabel2.setIcon(new ImageIcon(img));
+                String nomeImagem = System.currentTimeMillis() + ".jpg";
+                File novaImagem = new File("./fotos/" +nomeImagem);
+             
+                BufferedImage bi = new BufferedImage(jLabel2.getWidth(), jLabel2.getHeight(), BufferedImage.TYPE_INT_RGB);
+                Graphics2D g2d = bi.createGraphics();
+                g2d.drawImage(img, null, null);
+                g2d.dispose();
+                try {
+                    ImageIO.write(bi, "JPG", novaImagem);
+                } catch (IOException ex) {
+                    Logger.getLogger(JFrmCadPaciente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                
+                int ls = masterTable.getSelectedRow();
+                if(ls >= 0){
+                    Paciente p = list.get(ls);
+                    p.setFoto(nomeImagem);
+                }
+                
+            }
+           
+        }
+        
+    }//GEN-LAST:event_jLabel2MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField bairroField;
@@ -621,11 +751,12 @@ public class JFrmCadPaciente extends JPanel {
     private javax.swing.JLabel fotoLabel;
     private javax.swing.JTextField idpacienteField;
     private javax.swing.JLabel idpacienteLabel;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
+    private javax.swing.JButton jButtonPesquisaProfissao;
+    private javax.swing.JComboBox<String> jComboBoxCidade;
+    private javax.swing.JComboBox<String> jComboBoxEstado;
+    private javax.swing.JComboBox<String> jComboBoxMedico;
+    private javax.swing.JComboBox<String> jComboBoxProfissao;
+    private javax.swing.JComboBox<String> jComboBoxTurno;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -688,6 +819,7 @@ public class JFrmCadPaciente extends JPanel {
                 frame.setContentPane(new JFrmCadPaciente());
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
+                frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
             }
         });
