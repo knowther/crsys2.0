@@ -8,6 +8,7 @@ package view;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
@@ -17,6 +18,7 @@ import javax.swing.table.TableModel;
  * @author johnn
  */
 public class TelaPrincipalMDI extends javax.swing.JFrame {
+    private Paciente paciente;
     
 
     /**
@@ -39,6 +41,7 @@ public class TelaPrincipalMDI extends javax.swing.JFrame {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("clinica_crc?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
         pacienteQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT p FROM Paciente p");
         pacienteList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : pacienteQuery.getResultList();
+        pacienteList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : pacienteQuery.getResultList();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jPanel1 = new javax.swing.JPanel();
@@ -56,6 +59,8 @@ public class TelaPrincipalMDI extends javax.swing.JFrame {
         pacientePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePac = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         ocorrenciaPanel = new javax.swing.JPanel();
         declaracaoPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -242,16 +247,77 @@ public class TelaPrincipalMDI extends javax.swing.JFrame {
         columnBinding.setColumnClass(java.util.Date.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
+        jTableBinding.bind();org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, pacienteList, org.jdesktop.beansbinding.ObjectProperty.create(), jTablePac, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+        bindingGroup.addBinding(binding);
+
+        jTablePac.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTablePacMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTablePac);
+
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, pacienteList1, jTable1);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bairro}"));
+        columnBinding.setColumnName("Bairro");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cep}"));
+        columnBinding.setColumnName("Cep");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cidade}"));
+        columnBinding.setColumnName("Cidade");
+        columnBinding.setColumnClass(view.Cidade.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cpf}"));
+        columnBinding.setColumnName("Cpf");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dataNascimento}"));
+        columnBinding.setColumnName("Data Nascimento");
+        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${estado}"));
+        columnBinding.setColumnName("Estado");
+        columnBinding.setColumnClass(view.Estado.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${foto}"));
+        columnBinding.setColumnName("Foto");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idpaciente}"));
+        columnBinding.setColumnName("Idpaciente");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${medico}"));
+        columnBinding.setColumnName("Medico");
+        columnBinding.setColumnClass(view.Medico.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nome}"));
+        columnBinding.setColumnName("Nome");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${numero}"));
+        columnBinding.setColumnName("Numero");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profissao}"));
+        columnBinding.setColumnName("Profissao");
+        columnBinding.setColumnClass(view.Profissao.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${rua}"));
+        columnBinding.setColumnName("Rua");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${turno}"));
+        columnBinding.setColumnName("Turno");
+        columnBinding.setColumnClass(view.Turno.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, pacienteList1, org.jdesktop.beansbinding.ObjectProperty.create(), jTable1, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+        bindingGroup.addBinding(binding);
+
+        jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout pacientePanelLayout = new javax.swing.GroupLayout(pacientePanel);
         pacientePanel.setLayout(pacientePanelLayout);
         pacientePanelLayout.setHorizontalGroup(
             pacientePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pacientePanelLayout.createSequentialGroup()
-                .addGap(233, 233, 233)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pacientePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pacientePanelLayout.createSequentialGroup()
+                        .addGap(233, 233, 233)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pacientePanelLayout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 946, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(317, Short.MAX_VALUE))
         );
         pacientePanelLayout.setVerticalGroup(
@@ -259,7 +325,9 @@ public class TelaPrincipalMDI extends javax.swing.JFrame {
             .addGroup(pacientePanelLayout.createSequentialGroup()
                 .addGap(120, 120, 120)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(293, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         parentPanel.add(pacientePanel, "card4");
@@ -519,9 +587,25 @@ public class TelaPrincipalMDI extends javax.swing.JFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
       
     }//GEN-LAST:event_jMenuItem6ActionPerformed
-     public void preencherTabela(final String Sql) {
-     
-    }
+
+    private void jTablePacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePacMouseClicked
+
+        
+      
+        int ls = jTablePac.getSelectedRow();
+        
+       if (ls >= 0){
+           paciente = pacienteList.get(ls);
+           pacienteList1.add(paciente);
+       
+           JFrmTelaPaciente telaPac = new JFrmTelaPaciente(new JFrame(), true);
+        telaPac.setLocationRelativeTo(null);
+        telaPac.setVisible(true);
+       }
+       
+    }//GEN-LAST:event_jTablePacMouseClicked
+
+   
     /**
      * @param args the command line arguments
      */
@@ -561,6 +645,16 @@ public class TelaPrincipalMDI extends javax.swing.JFrame {
         });
     }
 
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+    
+    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton declaracaoButton;
     private javax.swing.JButton declaracaoButtonBVD;
@@ -588,8 +682,10 @@ public class TelaPrincipalMDI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTablePac;
     private javax.swing.JButton ocorrenciaButton;
     private javax.swing.JButton ocorrenciaButtonBVD;
@@ -597,6 +693,7 @@ public class TelaPrincipalMDI extends javax.swing.JFrame {
     private javax.swing.JButton pacienteButton;
     private javax.swing.JButton pacienteButtonBVD;
     private java.util.List<view.Paciente> pacienteList;
+    private java.util.List<view.Paciente> pacienteList1;
     private javax.swing.JPanel pacientePanel;
     private javax.persistence.Query pacienteQuery;
     private javax.swing.JPanel parentPanel;

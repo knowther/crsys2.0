@@ -243,7 +243,7 @@ public class Paciente implements Serializable {
 
     @Override
     public String toString() {
-        return "view.Paciente[ idpaciente=" + idpaciente + " ]";
+        return nome;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
