@@ -485,7 +485,7 @@ public class TelaPrincipalMDI extends javax.swing.JFrame {
 
         bindingGroup.bind();
 
-        pack();
+        setSize(new java.awt.Dimension(1967, 1086));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

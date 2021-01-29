@@ -22,6 +22,7 @@ import javax.persistence.RollbackException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
 
@@ -30,6 +31,7 @@ import javax.swing.filechooser.FileFilter;
  * @author johnn
  */
 public class JFrmCadPaciente extends JPanel {
+    int flag =0;
     
     public JFrmCadPaciente() {
         initComponents();
@@ -61,8 +63,6 @@ public class JFrmCadPaciente extends JPanel {
         turnoList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : turnoQuery.getResultList();
         medicoQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Medico m");
         medicoList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : medicoQuery.getResultList();
-        masterScrollPane = new javax.swing.JScrollPane();
-        masterTable = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         idpacienteField = new javax.swing.JTextField();
@@ -101,49 +101,14 @@ public class JFrmCadPaciente extends JPanel {
         jComboBoxMedico = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButtonIrPrimeiro = new javax.swing.JButton();
+        jButtonIrAnterior = new javax.swing.JButton();
+        jButtonIrProximo = new javax.swing.JButton();
+        jButtonIrUltimo = new javax.swing.JButton();
+        masterScrollPane = new javax.swing.JScrollPane();
+        masterTable = new javax.swing.JTable();
 
         FormListener formListener = new FormListener();
-
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idpaciente}"));
-        columnBinding.setColumnName("Idpaciente");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bairro}"));
-        columnBinding.setColumnName("Bairro");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cep}"));
-        columnBinding.setColumnName("Cep");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cpf}"));
-        columnBinding.setColumnName("Cpf");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dataNascimento}"));
-        columnBinding.setColumnName("Data Nascimento");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${foto}"));
-        columnBinding.setColumnName("Foto");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nome}"));
-        columnBinding.setColumnName("Nome");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${número}"));
-        columnBinding.setColumnName("Número");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${rua}"));
-        columnBinding.setColumnName("Rua");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cidade}"));
-        columnBinding.setColumnName("Cidade Idcidade");
-        columnBinding.setColumnClass(view.Cidade.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${estado}"));
-        columnBinding.setColumnName("Estado Idestado");
-        columnBinding.setColumnClass(view.Estado.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profissao}"));
-        columnBinding.setColumnName("Profissao Idprofissao");
-        columnBinding.setColumnClass(view.Profissao.class);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
-        masterScrollPane.setViewportView(masterTable);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Pessoais"));
 
@@ -507,7 +472,7 @@ public class JFrmCadPaciente extends JPanel {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -523,26 +488,97 @@ public class JFrmCadPaciente extends JPanel {
                 .addContainerGap())
         );
 
+        jButtonIrPrimeiro.setText("<<");
+        jButtonIrPrimeiro.addActionListener(formListener);
+
+        jButtonIrAnterior.setText("<");
+        jButtonIrAnterior.addActionListener(formListener);
+
+        jButtonIrProximo.setText(">");
+        jButtonIrProximo.addActionListener(formListener);
+
+        jButtonIrUltimo.setText(">>");
+        jButtonIrUltimo.addActionListener(formListener);
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idpaciente}"));
+        columnBinding.setColumnName("Idpaciente");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bairro}"));
+        columnBinding.setColumnName("Bairro");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cep}"));
+        columnBinding.setColumnName("Cep");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cpf}"));
+        columnBinding.setColumnName("Cpf");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dataNascimento}"));
+        columnBinding.setColumnName("Data Nascimento");
+        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${foto}"));
+        columnBinding.setColumnName("Foto");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nome}"));
+        columnBinding.setColumnName("Nome");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${número}"));
+        columnBinding.setColumnName("Número");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${rua}"));
+        columnBinding.setColumnName("Rua");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cidade}"));
+        columnBinding.setColumnName("Cidade Idcidade");
+        columnBinding.setColumnClass(view.Cidade.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${estado}"));
+        columnBinding.setColumnName("Estado Idestado");
+        columnBinding.setColumnClass(view.Estado.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profissao}"));
+        columnBinding.setColumnName("Profissao Idprofissao");
+        columnBinding.setColumnClass(view.Profissao.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        masterTable.addMouseListener(formListener);
+        masterScrollPane.setViewportView(masterTable);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonIrPrimeiro, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonIrAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonIrProximo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonIrUltimo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(masterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(99, Short.MAX_VALUE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(masterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(masterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(47, 47, 47))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(masterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonIrPrimeiro)
+                    .addComponent(jButtonIrAnterior)
+                    .addComponent(jButtonIrProximo)
+                    .addComponent(jButtonIrUltimo))
+                .addContainerGap())
         );
 
         bindingGroup.bind();
@@ -555,6 +591,9 @@ public class JFrmCadPaciente extends JPanel {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == idpacienteField) {
                 JFrmCadPaciente.this.idpacienteFieldActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButtonPesquisaProfissao) {
+                JFrmCadPaciente.this.jButtonPesquisaProfissaoActionPerformed(evt);
             }
             else if (evt.getSource() == ruaField) {
                 JFrmCadPaciente.this.ruaFieldActionPerformed(evt);
@@ -571,8 +610,17 @@ public class JFrmCadPaciente extends JPanel {
             else if (evt.getSource() == saveButton) {
                 JFrmCadPaciente.this.saveButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == jButtonPesquisaProfissao) {
-                JFrmCadPaciente.this.jButtonPesquisaProfissaoActionPerformed(evt);
+            else if (evt.getSource() == jButtonIrPrimeiro) {
+                JFrmCadPaciente.this.jButtonIrPrimeiroActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButtonIrUltimo) {
+                JFrmCadPaciente.this.jButtonIrUltimoActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButtonIrAnterior) {
+                JFrmCadPaciente.this.jButtonIrAnteriorActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButtonIrProximo) {
+                JFrmCadPaciente.this.jButtonIrProximoActionPerformed(evt);
             }
         }
 
@@ -585,6 +633,9 @@ public class JFrmCadPaciente extends JPanel {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             if (evt.getSource() == jLabel2) {
                 JFrmCadPaciente.this.jLabel2MouseClicked(evt);
+            }
+            else if (evt.getSource() == masterTable) {
+                JFrmCadPaciente.this.masterTableMouseClicked(evt);
             }
         }
 
@@ -603,7 +654,10 @@ public class JFrmCadPaciente extends JPanel {
 
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
-        entityManager.getTransaction().rollback();
+       
+        
+         if(flag ==0){
+            entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
         java.util.Collection data = query.getResultList();
         for (Object entity : data) {
@@ -611,10 +665,13 @@ public class JFrmCadPaciente extends JPanel {
         }
         list.clear();
         list.addAll(data);
-    }//GEN-LAST:event_refreshButtonActionPerformed
-
-    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        int[] selected = masterTable.getSelectedRows();
+        }
+        
+        
+        if(flag== 1){
+            JOptionPane.showConfirmDialog(null, "Tem certeza que deseja Cancelar?");
+            
+         int[] selected = masterTable.getSelectedRows();
         List<view.Paciente> toRemove = new ArrayList<view.Paciente>(selected.length);
         for (int idx = 0; idx < selected.length; idx++) {
             view.Paciente p = list.get(masterTable.convertRowIndexToModel(selected[idx]));
@@ -622,15 +679,51 @@ public class JFrmCadPaciente extends JPanel {
             entityManager.remove(p);
         }
         list.removeAll(toRemove);
+        flag = 0;
+         try {
+            entityManager.getTransaction().commit();
+            entityManager.getTransaction().begin();
+        } catch (RollbackException rex) {
+            rex.printStackTrace();
+            entityManager.getTransaction().begin();
+            List<view.Paciente> merged = new ArrayList<view.Paciente>(list.size());
+            for (view.Paciente p : list) {
+                merged.add(entityManager.merge(p));
+            }
+            list.clear();
+            list.addAll(merged);
+        }
+        
+        }
+       
+    }//GEN-LAST:event_refreshButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+      
+        JOptionPane.showConfirmDialog(null, "Tem certeza que deseja Cancelar?");
+          int[] selected = masterTable.getSelectedRows();
+        List<view.Paciente> toRemove = new ArrayList<view.Paciente>(selected.length);
+        for (int idx = 0; idx < selected.length; idx++) {
+            view.Paciente p = list.get(masterTable.convertRowIndexToModel(selected[idx]));
+            toRemove.add(p);
+            entityManager.remove(p);
+        }
+        list.removeAll(toRemove);
+        
+        
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+        flag = 1;
         view.Paciente p = new view.Paciente();
         entityManager.persist(p);
         list.add(p);
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);
         masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
+        ImageIcon icone = new ImageIcon("./fotos/user.png");
+               jLabel2.setIcon(icone);
+        
     }//GEN-LAST:event_newButtonActionPerformed
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
@@ -731,6 +824,72 @@ public class JFrmCadPaciente extends JPanel {
         
     }//GEN-LAST:event_jLabel2MouseClicked
 
+    private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
+        
+       
+    }//GEN-LAST:event_masterTableMouseClicked
+
+    private void jButtonIrPrimeiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIrPrimeiroActionPerformed
+        
+        int numerodelinhas = masterTable.getRowCount();
+        
+        if(numerodelinhas > 0){
+            masterTable.setRowSelectionInterval(0, 0);
+            atualizaFoto();
+        }
+        
+        
+    }//GEN-LAST:event_jButtonIrPrimeiroActionPerformed
+
+    private void jButtonIrUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIrUltimoActionPerformed
+       
+          int numeroLinhas = masterTable.getRowCount();
+        
+        if(numeroLinhas > 0){
+            masterTable.setRowSelectionInterval(numeroLinhas-1, numeroLinhas-1);
+            atualizaFoto();
+        }
+        
+    }//GEN-LAST:event_jButtonIrUltimoActionPerformed
+
+    private void jButtonIrAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIrAnteriorActionPerformed
+        
+        
+          int numerodelinhas = masterTable.getRowCount();
+          int ls = masterTable.getSelectedRow();
+          
+        if(numerodelinhas > 0 && ls != 0){
+            masterTable.setRowSelectionInterval(ls - 1, ls -1);
+            atualizaFoto();
+        }
+        
+        
+        
+    }//GEN-LAST:event_jButtonIrAnteriorActionPerformed
+
+    private void jButtonIrProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIrProximoActionPerformed
+    
+         int numeroLinhas = masterTable.getRowCount();
+          int ls = masterTable.getSelectedRow();
+          
+        if(numeroLinhas > 0 && ls < numeroLinhas){
+            masterTable.setRowSelectionInterval(ls + 1, ls +1);
+        atualizaFoto();
+        }
+    }//GEN-LAST:event_jButtonIrProximoActionPerformed
+
+    private void atualizaFoto(){
+         int ls = masterTable.getSelectedRow();
+        if(ls >=0){
+           Paciente p = list.get(ls);
+           String nomeFoto = p.getFoto();
+           
+           if(!nomeFoto.isEmpty()){
+               ImageIcon icone = new ImageIcon("./fotos/"+nomeFoto);
+               jLabel2.setIcon(icone);
+           }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField bairroField;
@@ -751,6 +910,10 @@ public class JFrmCadPaciente extends JPanel {
     private javax.swing.JLabel fotoLabel;
     private javax.swing.JTextField idpacienteField;
     private javax.swing.JLabel idpacienteLabel;
+    private javax.swing.JButton jButtonIrAnterior;
+    private javax.swing.JButton jButtonIrPrimeiro;
+    private javax.swing.JButton jButtonIrProximo;
+    private javax.swing.JButton jButtonIrUltimo;
     private javax.swing.JButton jButtonPesquisaProfissao;
     private javax.swing.JComboBox<String> jComboBoxCidade;
     private javax.swing.JComboBox<String> jComboBoxEstado;
