@@ -37,6 +37,7 @@ public class JFrmCadPaciente extends JPanel {
         initComponents();
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
+            jTextFieldFoto.setVisible(false);
         }
     }
 
@@ -78,6 +79,7 @@ public class JFrmCadPaciente extends JPanel {
         fotoLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButtonPesquisaProfissao = new javax.swing.JButton();
+        jTextFieldFoto = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         bairroField = new javax.swing.JTextField();
         bairroLabel = new javax.swing.JLabel();
@@ -175,28 +177,33 @@ public class JFrmCadPaciente extends JPanel {
 
         jButtonPesquisaProfissao.addActionListener(formListener);
 
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.foto}"), jTextFieldFoto, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(nomeField, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(idpacienteLabel)
-                    .addComponent(nomeLabel)
-                    .addComponent(idpacienteField, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(profissaoIdprofissaoLabel)
-                    .addComponent(jComboBoxProfissao, 0, 320, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dataNascimentoLabel)
-                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cpfLabel)
-                            .addComponent(cpfField, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(nomeField, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(idpacienteLabel)
+                        .addComponent(nomeLabel)
+                        .addComponent(idpacienteField, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(profissaoIdprofissaoLabel)
+                        .addComponent(jComboBoxProfissao, 0, 320, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(dataNascimentoLabel)
+                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(cpfLabel)
+                                .addComponent(cpfField, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))))
+                    .addComponent(jTextFieldFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(fotoLabel)
@@ -236,7 +243,9 @@ public class JFrmCadPaciente extends JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jComboBoxProfissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonPesquisaProfissao))
-                        .addGap(0, 62, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 31, Short.MAX_VALUE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -723,6 +732,8 @@ public class JFrmCadPaciente extends JPanel {
         masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
         ImageIcon icone = new ImageIcon("./fotos/user.png");
                jLabel2.setIcon(icone);
+               jTextFieldFoto.setText("user.png");
+               
         
     }//GEN-LAST:event_newButtonActionPerformed
     
@@ -888,6 +899,8 @@ public class JFrmCadPaciente extends JPanel {
                ImageIcon icone = new ImageIcon("./fotos/"+nomeFoto);
                jLabel2.setIcon(icone);
            }
+           
+          
         }
     }
 
@@ -929,6 +942,7 @@ public class JFrmCadPaciente extends JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JTextField jTextFieldFoto;
     private java.util.List<view.Paciente> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
@@ -984,6 +998,7 @@ public class JFrmCadPaciente extends JPanel {
                 frame.pack();
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
+                
             }
         });
     }
