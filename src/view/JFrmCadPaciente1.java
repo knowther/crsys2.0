@@ -35,6 +35,7 @@ public class JFrmCadPaciente1 extends JPanel {
         initComponents();
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
+            desabilitarBotoes();
         }
     }
 
@@ -73,12 +74,12 @@ public class JFrmCadPaciente1 extends JPanel {
         nomeField = new javax.swing.JTextField();
         cpfField = new javax.swing.JTextField();
         dataNascimentoLabel = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jFormattedData = new javax.swing.JFormattedTextField();
         nomeLabel = new javax.swing.JLabel();
         profissaoIdprofissaoLabel = new javax.swing.JLabel();
         jComboBoxProfissao = new javax.swing.JComboBox<>();
         fotoLabel = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelFoto = new javax.swing.JLabel();
         jButtonPesquisaProfissao = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jComboBoxTurno = new javax.swing.JComboBox<>();
@@ -181,8 +182,6 @@ public class JFrmCadPaciente1 extends JPanel {
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.idpaciente}"), idpacienteField, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), idpacienteField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
 
         idpacienteField.addActionListener(formListener);
 
@@ -192,23 +191,17 @@ public class JFrmCadPaciente1 extends JPanel {
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.nome}"), nomeField, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), nomeField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
 
         cpfField.setToolTipText("");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.cpf}"), cpfField, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), cpfField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
 
         dataNascimentoLabel.setText("Data Nascimento:");
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        jFormattedData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.dataNascimento}"), jFormattedTextField1, org.jdesktop.beansbinding.BeanProperty.create("value"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jFormattedTextField1, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.dataNascimento}"), jFormattedData, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
         nomeLabel.setText("Nome:");
@@ -219,24 +212,14 @@ public class JFrmCadPaciente1 extends JPanel {
         bindingGroup.addBinding(jComboBoxBinding);
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.profissao}"), jComboBoxProfissao, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBoxProfissao, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
 
         fotoLabel.setText("Foto:");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\johnn\\Documents\\NetBeansProjects\\clinicacrc2\\fotos\\user.png")); // NOI18N
-        jLabel2.setText("jLabel2");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jLabel2, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        jLabel2.addMouseListener(formListener);
+        jLabelFoto.setIcon(new javax.swing.ImageIcon("C:\\Users\\johnn\\Documents\\NetBeansProjects\\clinicacrc2\\fotos\\user.png")); // NOI18N
+        jLabelFoto.setText("jLabel2");
+        jLabelFoto.addMouseListener(formListener);
 
         jButtonPesquisaProfissao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/magnifier.png"))); // NOI18N
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jButtonPesquisaProfissao, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
         jButtonPesquisaProfissao.addActionListener(formListener);
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
@@ -255,7 +238,7 @@ public class JFrmCadPaciente1 extends JPanel {
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(dataNascimentoLabel)
-                            .add(jFormattedTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 143, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(jFormattedData, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 143, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                             .add(cpfLabel)
@@ -268,7 +251,7 @@ public class JFrmCadPaciente1 extends JPanel {
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
                         .add(jButtonPesquisaProfissao, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 59, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 233, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabelFoto, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 233, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -292,7 +275,7 @@ public class JFrmCadPaciente1 extends JPanel {
                             .add(cpfLabel))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(jFormattedTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jFormattedData, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(cpfField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(profissaoIdprofissaoLabel)
@@ -301,7 +284,7 @@ public class JFrmCadPaciente1 extends JPanel {
                             .add(jButtonPesquisaProfissao)
                             .add(jComboBoxProfissao, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .add(0, 62, Short.MAX_VALUE))
-                    .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .add(jLabelFoto, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -311,14 +294,10 @@ public class JFrmCadPaciente1 extends JPanel {
         bindingGroup.addBinding(jComboBoxBinding);
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.turno}"), jComboBoxTurno, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBoxTurno, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
 
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, medicoList, jComboBoxMedico);
         bindingGroup.addBinding(jComboBoxBinding);
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.medico}"), jComboBoxMedico, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBoxMedico, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         jLabel1.setText("Turno:");
@@ -368,9 +347,6 @@ public class JFrmCadPaciente1 extends JPanel {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Logradouro"));
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bairro}"), bairroField, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        binding.setSourceUnreadableValue("");
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), bairroField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         bairroLabel.setText("Bairro:");
@@ -383,19 +359,13 @@ public class JFrmCadPaciente1 extends JPanel {
         bindingGroup.addBinding(jComboBoxBinding);
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.cidade}"), jComboBoxCidade, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBoxCidade, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.rua}"), ruaField, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), ruaField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         ruaField.addActionListener(formListener);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.cep}"), cepField, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), cepField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         ruaLabel.setText("Endereço");
@@ -403,9 +373,6 @@ public class JFrmCadPaciente1 extends JPanel {
         númeroLabel.setText("Número:");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.numero}"), numeroField, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        binding.setSourceUnreadableValue("");
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), numeroField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         estadoIdestadoLabel.setText("Estado:");
@@ -413,8 +380,6 @@ public class JFrmCadPaciente1 extends JPanel {
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, estadoList, jComboBoxEstado);
         bindingGroup.addBinding(jComboBoxBinding);
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.estado}"), jComboBoxEstado, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBoxEstado, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         jComboBoxEstado.addItemListener(formListener);
@@ -586,7 +551,7 @@ public class JFrmCadPaciente1 extends JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(parentPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 815, Short.MAX_VALUE))
+                .add(parentPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -630,8 +595,8 @@ public class JFrmCadPaciente1 extends JPanel {
             if (evt.getSource() == masterTable) {
                 JFrmCadPaciente1.this.masterTableMouseClicked(evt);
             }
-            else if (evt.getSource() == jLabel2) {
-                JFrmCadPaciente1.this.jLabel2MouseClicked(evt);
+            else if (evt.getSource() == jLabelFoto) {
+                JFrmCadPaciente1.this.jLabelFotoMouseClicked(evt);
             }
             else if (evt.getSource() == jList1) {
                 JFrmCadPaciente1.this.jList1MouseClicked(evt);
@@ -656,6 +621,7 @@ public class JFrmCadPaciente1 extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
+            desabilitarBotoes();
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();
@@ -700,10 +666,10 @@ public class JFrmCadPaciente1 extends JPanel {
         }
     }//GEN-LAST:event_jComboBoxEstadoItemStateChanged
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+    private void jLabelFotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelFotoMouseClicked
         
         
-        if(evt.getClickCount() ==2 && jLabel2.isEnabled()){
+        if(evt.getClickCount() ==2 && jLabelFoto.isEnabled()){
             JFileChooser fc = new JFileChooser();
             fc.setFileFilter(new FileFilter() {
                 @Override
@@ -722,12 +688,12 @@ public class JFrmCadPaciente1 extends JPanel {
                 
                 String path = fc.getSelectedFile().getAbsolutePath();
                 ImageIcon icone1 = new ImageIcon(path);
-                Image img = icone1.getImage().getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_DEFAULT);
-                jLabel2.setIcon(new ImageIcon(img));
+                Image img = icone1.getImage().getScaledInstance(jLabelFoto.getWidth(), jLabelFoto.getHeight(), Image.SCALE_DEFAULT);
+                jLabelFoto.setIcon(new ImageIcon(img));
                 String nomeImagem = System.currentTimeMillis() + ".jpg";
                 File novaImagem = new File("./fotos/" +nomeImagem);
              
-                BufferedImage bi = new BufferedImage(jLabel2.getWidth(), jLabel2.getHeight(), BufferedImage.TYPE_INT_RGB);
+                BufferedImage bi = new BufferedImage(jLabelFoto.getWidth(), jLabelFoto.getHeight(), BufferedImage.TYPE_INT_RGB);
                 Graphics2D g2d = bi.createGraphics();
                 g2d.drawImage(img, null, null);
                 g2d.dispose();
@@ -748,7 +714,7 @@ public class JFrmCadPaciente1 extends JPanel {
            
         }
         
-    }//GEN-LAST:event_jLabel2MouseClicked
+    }//GEN-LAST:event_jLabelFotoMouseClicked
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
       
@@ -766,7 +732,7 @@ public class JFrmCadPaciente1 extends JPanel {
            
            if(!nomeFoto.isEmpty()){
                ImageIcon icone = new ImageIcon("./fotos/"+nomeFoto);
-               jLabel2.setIcon(icone);
+               jLabelFoto.setIcon(icone);
            }
        }
     }//GEN-LAST:event_masterTableMouseClicked
@@ -776,10 +742,12 @@ public class JFrmCadPaciente1 extends JPanel {
 //GEN-LAST:event_refreshButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         parentPanel.removeAll();
+         desabilitarBotoes();
+        parentPanel.removeAll();
         parentPanel.add(pacienteTable);
         parentPanel.repaint();
         parentPanel.revalidate();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
@@ -787,9 +755,10 @@ public class JFrmCadPaciente1 extends JPanel {
     }//GEN-LAST:event_jList1MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+       habilitarBotoes();
     }//GEN-LAST:event_jButton3ActionPerformed
-private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
+private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {  
+        desabilitarBotoes();
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
         java.util.Collection data = query.getResultList();
@@ -798,7 +767,47 @@ private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {
         }
         list.clear();
         list.addAll(data);
-    }                                             
+         int numLinha = masterTable.getSelectedRow();
+         masterTable.setRowSelectionInterval(numLinha +1, numLinha +1);
+    }  
+
+     private void desabilitarBotoes(){
+         
+         idpacienteField.setEnabled(false);
+         nomeField.setEnabled(false);
+         jFormattedData.setEnabled(false);
+         cpfField.setEnabled(false);
+         jLabelFoto.setEnabled(false);
+         jComboBoxProfissao.setEnabled(false);
+         jButtonPesquisaProfissao.setEnabled(false);
+         ruaField.setEnabled(false);
+         numeroField.setEnabled(false);
+         bairroField.setEnabled(false);
+         jComboBoxEstado.setEnabled(false);
+         jComboBoxCidade.setEnabled(false);
+         cepField.setEnabled(false);
+         jComboBoxTurno.setEnabled(false);
+         jComboBoxMedico.setEnabled(false);
+        
+     }
+     
+     private void habilitarBotoes(){
+         idpacienteField.setEnabled(true);
+         nomeField.setEnabled(true);
+         jFormattedData.setEnabled(true);
+         cpfField.setEnabled(true);
+         jLabelFoto.setEnabled(true);
+         jComboBoxProfissao.setEnabled(true);
+         jButtonPesquisaProfissao.setEnabled(true);
+         ruaField.setEnabled(true);
+         numeroField.setEnabled(true);
+         bairroField.setEnabled(true);
+         jComboBoxEstado.setEnabled(true);
+         jComboBoxCidade.setEnabled(true);
+         cepField.setEnabled(true);
+         jComboBoxTurno.setEnabled(true);
+         jComboBoxMedico.setEnabled(true);
+     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -828,10 +837,10 @@ private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JComboBox<String> jComboBoxMedico;
     private javax.swing.JComboBox<String> jComboBoxProfissao;
     private javax.swing.JComboBox<String> jComboBoxTurno;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedData;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelFoto;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

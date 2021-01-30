@@ -422,7 +422,7 @@
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="dataNascimentoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jFormattedTextField1" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
+                                      <Component id="jFormattedData" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -440,7 +440,7 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jButtonPesquisaProfissao" min="-2" pref="59" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jLabel2" min="-2" pref="233" max="-2" attributes="0"/>
+                                  <Component id="jLabelFoto" min="-2" pref="233" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -470,7 +470,7 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jFormattedTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jFormattedData" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="cpfField" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -482,7 +482,7 @@
                                   </Group>
                                   <EmptySpace min="0" pref="62" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="jLabel2" pref="0" max="32767" attributes="0"/>
+                              <Component id="jLabelFoto" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -495,7 +495,6 @@
                     <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.idpaciente}" target="idpacienteField" targetPath="text" updateStrategy="0" immediately="false">
                       <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                     </BindingProperty>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="idpacienteField" targetPath="enabled" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="idpacienteFieldActionPerformed"/>
@@ -519,7 +518,6 @@
                     <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.nome}" target="nomeField" targetPath="text" updateStrategy="0" immediately="false">
                       <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                     </BindingProperty>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="nomeField" targetPath="enabled" updateStrategy="1" immediately="false"/>
                   </BindingProperties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="cpfField">
@@ -530,7 +528,6 @@
                     <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.cpf}" target="cpfField" targetPath="text" updateStrategy="0" immediately="false">
                       <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                     </BindingProperty>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="cpfField" targetPath="enabled" updateStrategy="1" immediately="false"/>
                   </BindingProperties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="dataNascimentoLabel">
@@ -538,15 +535,14 @@
                     <Property name="text" type="java.lang.String" value="Data Nascimento:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField1">
+                <Component class="javax.swing.JFormattedTextField" name="jFormattedData">
                   <Properties>
                     <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                       <Format subtype="0" type="1"/>
                     </Property>
                   </Properties>
                   <BindingProperties>
-                    <BindingProperty name="value" source="masterTable" sourcePath="${selectedElement.dataNascimento}" target="jFormattedTextField1" targetPath="value" updateStrategy="0" immediately="false"/>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="jFormattedTextField1" targetPath="enabled" updateStrategy="0" immediately="false"/>
+                    <BindingProperty name="value" source="masterTable" sourcePath="${selectedElement.dataNascimento}" target="jFormattedData" targetPath="value" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="nomeLabel">
@@ -563,7 +559,6 @@
                   <BindingProperties>
                     <BindingProperty name="elements" source="profissaoList" target="jComboBoxProfissao" targetPath="elements" updateStrategy="0" immediately="false"/>
                     <BindingProperty name="selectedItem" source="masterTable" sourcePath="${selectedElement.profissao}" target="jComboBoxProfissao" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="jComboBoxProfissao" targetPath="enabled" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -574,18 +569,15 @@
                     <Property name="text" type="java.lang.String" value="Foto:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel2">
+                <Component class="javax.swing.JLabel" name="jLabelFoto">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="2" name="C:\Users\johnn\Documents\NetBeansProjects\clinicacrc2\fotos\user.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="jLabel2"/>
                   </Properties>
-                  <BindingProperties>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="jLabel2" targetPath="enabled" updateStrategy="0" immediately="false"/>
-                  </BindingProperties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel2MouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelFotoMouseClicked"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButtonPesquisaProfissao">
@@ -594,9 +586,6 @@
                       <Image iconType="3" name="/Imagens/magnifier.png"/>
                     </Property>
                   </Properties>
-                  <BindingProperties>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="jButtonPesquisaProfissao" targetPath="enabled" updateStrategy="0" immediately="false"/>
-                  </BindingProperties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPesquisaProfissaoActionPerformed"/>
                   </Events>
@@ -653,7 +642,6 @@
                   <BindingProperties>
                     <BindingProperty name="elements" source="turnoList" target="jComboBoxTurno" targetPath="elements" updateStrategy="0" immediately="false"/>
                     <BindingProperty name="selectedItem" source="masterTable" sourcePath="${selectedElement.turno}" target="jComboBoxTurno" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="jComboBoxTurno" targetPath="enabled" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -663,7 +651,6 @@
                   <BindingProperties>
                     <BindingProperty name="elements" source="medicoList" target="jComboBoxMedico" targetPath="elements" updateStrategy="0" immediately="false"/>
                     <BindingProperty name="selectedItem" source="masterTable" sourcePath="${selectedElement.medico}" target="jComboBoxMedico" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="jComboBoxMedico" targetPath="enabled" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -797,9 +784,7 @@
                   <BindingProperties>
                     <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.bairro}" target="bairroField" targetPath="text" updateStrategy="0" immediately="false">
                       <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                      <Property name="incompletePathValue" type="java.lang.String" value=""/>
                     </BindingProperty>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="bairroField" targetPath="enabled" updateStrategy="1" immediately="false"/>
                   </BindingProperties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="bairroLabel">
@@ -821,7 +806,6 @@
                   <BindingProperties>
                     <BindingProperty name="elements" source="cidadeList" target="jComboBoxCidade" targetPath="elements" updateStrategy="0" immediately="false"/>
                     <BindingProperty name="selectedItem" source="masterTable" sourcePath="${selectedElement.cidade}" target="jComboBoxCidade" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="jComboBoxCidade" targetPath="enabled" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -832,7 +816,6 @@
                     <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.rua}" target="ruaField" targetPath="text" updateStrategy="0" immediately="false">
                       <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                     </BindingProperty>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="ruaField" targetPath="enabled" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ruaFieldActionPerformed"/>
@@ -843,7 +826,6 @@
                     <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.cep}" target="cepField" targetPath="text" updateStrategy="0" immediately="false">
                       <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                     </BindingProperty>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="cepField" targetPath="enabled" updateStrategy="1" immediately="false"/>
                   </BindingProperties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="ruaLabel">
@@ -860,9 +842,7 @@
                   <BindingProperties>
                     <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.numero}" target="numeroField" targetPath="text" updateStrategy="0" immediately="false">
                       <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                      <Property name="incompletePathValue" type="java.lang.String" value=""/>
                     </BindingProperty>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="numeroField" targetPath="enabled" updateStrategy="1" immediately="false"/>
                   </BindingProperties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="estadoIdestadoLabel">
@@ -874,7 +854,6 @@
                   <BindingProperties>
                     <BindingProperty name="elements" source="estadoList" target="jComboBoxEstado" targetPath="elements" updateStrategy="0" immediately="false"/>
                     <BindingProperty name="selectedItem" source="masterTable" sourcePath="${selectedElement.estado}" target="jComboBoxEstado" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
-                    <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="jComboBoxEstado" targetPath="enabled" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
                   <Events>
                     <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jComboBoxEstadoItemStateChanged"/>
