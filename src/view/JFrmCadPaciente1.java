@@ -31,11 +31,14 @@ import javax.swing.filechooser.FileFilter;
  */
 public class JFrmCadPaciente1 extends JPanel {
     
+    int pesquisapornome = 0;
+    
     public JFrmCadPaciente1() {
         initComponents();
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
             desabilitarBotoes();
+            
         }
     }
 
@@ -62,10 +65,17 @@ public class JFrmCadPaciente1 extends JPanel {
         turnoList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : turnoQuery.getResultList();
         medicoQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Medico m");
         medicoList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : medicoQuery.getResultList();
+        buttonGroupPesquisa = new javax.swing.ButtonGroup();
         parentPanel = new javax.swing.JPanel();
         pacienteTable = new javax.swing.JPanel();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldPesquisaPaciente = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
         pacienteUnicPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         idpacienteField = new javax.swing.JTextField();
@@ -86,7 +96,6 @@ public class JFrmCadPaciente1 extends JPanel {
         jComboBoxMedico = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         bairroField = new javax.swing.JTextField();
         bairroLabel = new javax.swing.JLabel();
@@ -103,9 +112,6 @@ public class JFrmCadPaciente1 extends JPanel {
         saveButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
@@ -175,6 +181,35 @@ public class JFrmCadPaciente1 extends JPanel {
 
         pacienteTable.add(masterScrollPane);
         masterScrollPane.setBounds(100, 310, 1540, 390);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/rins45%_1.png"))); // NOI18N
+        pacienteTable.add(jLabel2);
+        jLabel2.setBounds(1100, -240, 690, 830);
+
+        jTextFieldPesquisaPaciente.addKeyListener(formListener);
+        pacienteTable.add(jTextFieldPesquisaPaciente);
+        jTextFieldPesquisaPaciente.setBounds(360, 230, 670, 30);
+
+        jLabel4.setText("Digite o nome do Paciente:");
+        pacienteTable.add(jLabel4);
+        jLabel4.setBounds(360, 210, 160, 14);
+
+        jLabel5.setText("Buscar por:");
+        pacienteTable.add(jLabel5);
+        jLabel5.setBounds(360, 180, 70, 14);
+
+        buttonGroupPesquisa.add(jRadioButton1);
+        jRadioButton1.setText("Nome");
+        jRadioButton1.addMouseListener(formListener);
+        jRadioButton1.addActionListener(formListener);
+        pacienteTable.add(jRadioButton1);
+        jRadioButton1.setBounds(430, 180, 70, 20);
+
+        buttonGroupPesquisa.add(jRadioButton2);
+        jRadioButton2.setText("Nome Social");
+        jRadioButton2.addMouseListener(formListener);
+        pacienteTable.add(jRadioButton2);
+        jRadioButton2.setBounds(500, 180, 93, 20);
 
         parentPanel.add(pacienteTable, "card3");
 
@@ -333,17 +368,6 @@ public class JFrmCadPaciente1 extends JPanel {
                 .addContainerGap(92, Short.MAX_VALUE))
         );
 
-        org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 130, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 180, Short.MAX_VALUE)
-        );
-
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Logradouro"));
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bairro}"), bairroField, org.jdesktop.beansbinding.BeanProperty.create("text"));
@@ -460,27 +484,6 @@ public class JFrmCadPaciente1 extends JPanel {
         jButton1.setText("Voltar");
         jButton1.addActionListener(formListener);
 
-        jList1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Dados cadastrais/Clínicos", "Sessões" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jList1.addMouseListener(formListener);
-        jScrollPane1.setViewportView(jList1);
-
-        org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-        );
-
         jButton2.setText("Gerar declaração");
 
         jButton3.setText("Alterar");
@@ -491,37 +494,31 @@ public class JFrmCadPaciente1 extends JPanel {
         pacienteUnicPanelLayout.setHorizontalGroup(
             pacienteUnicPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(pacienteUnicPanelLayout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jButton2)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jButton3)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(saveButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 74, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(refreshButton)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jButton1)
-                .add(268, 268, 268))
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, pacienteUnicPanelLayout.createSequentialGroup()
-                .add(70, 70, 70)
-                .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 156, Short.MAX_VALUE)
-                .add(jPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(10, 10, 10)
-                .add(pacienteUnicPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jPanel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(264, 264, 264))
+                .addContainerGap(366, Short.MAX_VALUE)
+                .add(pacienteUnicPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(pacienteUnicPanelLayout.createSequentialGroup()
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 396, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jButton2)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(jButton3)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(saveButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 74, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(refreshButton)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jButton1)
+                        .add(4, 4, 4))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, pacienteUnicPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                        .add(jPanel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(529, Short.MAX_VALUE))
         );
         pacienteUnicPanelLayout.setVerticalGroup(
             pacienteUnicPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(pacienteUnicPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(pacienteUnicPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(58, 58, 58)
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(18, 18, 18)
@@ -533,7 +530,7 @@ public class JFrmCadPaciente1 extends JPanel {
                     .add(jButton1)
                     .add(jButton2)
                     .add(jButton3))
-                .add(85, 85, 85))
+                .add(38, 38, 38))
         );
 
         parentPanel.add(pacienteUnicPanel, "card2");
@@ -544,14 +541,11 @@ public class JFrmCadPaciente1 extends JPanel {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(parentPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 1647, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .add(parentPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(parentPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, parentPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
         );
 
         bindingGroup.bind();
@@ -559,7 +553,7 @@ public class JFrmCadPaciente1 extends JPanel {
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener, java.awt.event.ItemListener, java.awt.event.MouseListener {
+    private class FormListener implements java.awt.event.ActionListener, java.awt.event.ItemListener, java.awt.event.KeyListener, java.awt.event.MouseListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == idpacienteField) {
@@ -583,12 +577,27 @@ public class JFrmCadPaciente1 extends JPanel {
             else if (evt.getSource() == jButton3) {
                 JFrmCadPaciente1.this.jButton3ActionPerformed(evt);
             }
+            else if (evt.getSource() == jRadioButton1) {
+                JFrmCadPaciente1.this.jRadioButton1ActionPerformed(evt);
+            }
         }
 
         public void itemStateChanged(java.awt.event.ItemEvent evt) {
             if (evt.getSource() == jComboBoxEstado) {
                 JFrmCadPaciente1.this.jComboBoxEstadoItemStateChanged(evt);
             }
+        }
+
+        public void keyPressed(java.awt.event.KeyEvent evt) {
+        }
+
+        public void keyReleased(java.awt.event.KeyEvent evt) {
+            if (evt.getSource() == jTextFieldPesquisaPaciente) {
+                JFrmCadPaciente1.this.jTextFieldPesquisaPacienteKeyReleased(evt);
+            }
+        }
+
+        public void keyTyped(java.awt.event.KeyEvent evt) {
         }
 
         public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -598,8 +607,11 @@ public class JFrmCadPaciente1 extends JPanel {
             else if (evt.getSource() == jLabelFoto) {
                 JFrmCadPaciente1.this.jLabelFotoMouseClicked(evt);
             }
-            else if (evt.getSource() == jList1) {
-                JFrmCadPaciente1.this.jList1MouseClicked(evt);
+            else if (evt.getSource() == jRadioButton1) {
+                JFrmCadPaciente1.this.jRadioButton1MouseClicked(evt);
+            }
+            else if (evt.getSource() == jRadioButton2) {
+                JFrmCadPaciente1.this.jRadioButton2MouseClicked(evt);
             }
         }
 
@@ -750,13 +762,35 @@ public class JFrmCadPaciente1 extends JPanel {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
-       
-    }//GEN-LAST:event_jList1MouseClicked
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        habilitarBotoes();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jTextFieldPesquisaPacienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesquisaPacienteKeyReleased
+       
+        if(pesquisapornome ==1){
+         query = entityManager.createQuery("select p from Paciente p where p.nome like :nome");
+        query.setParameter("nome", jTextFieldPesquisaPaciente.getText() +"%" );
+        list.clear();
+        list.addAll(query.getResultList());
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_jTextFieldPesquisaPacienteKeyReleased
+
+    private void jRadioButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton1MouseClicked
+    pesquisapornome = 1;
+    }//GEN-LAST:event_jRadioButton1MouseClicked
+
+    private void jRadioButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton2MouseClicked
+        pesquisapornome = 0;
+    }//GEN-LAST:event_jRadioButton2MouseClicked
 private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {  
         desabilitarBotoes();
         entityManager.getTransaction().rollback();
@@ -813,6 +847,7 @@ private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField bairroField;
     private javax.swing.JLabel bairroLabel;
+    private javax.swing.ButtonGroup buttonGroupPesquisa;
     private javax.swing.JTextField cepField;
     private javax.swing.JLabel cepLabel;
     private javax.swing.JLabel cidadeIdcidadeLabel;
@@ -839,15 +874,17 @@ private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JComboBox<String> jComboBoxTurno;
     private javax.swing.JFormattedTextField jFormattedData;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelFoto;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JTextField jTextFieldPesquisaPaciente;
     private java.util.List<view.Paciente> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
